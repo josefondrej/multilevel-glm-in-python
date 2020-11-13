@@ -5,7 +5,8 @@ from typing import Tuple, Dict, Any
 import numpy as np
 from pandas import DataFrame
 
-from multilevel_glm_in_python.exponential_family import family_to_variance_function, family_to_random_sampler
+from multilevel_glm_in_python.exponential_family import family_to_variance_function, family_to_random_sampler, \
+    link_str_to_link_inverse
 
 
 def parse_formula(formula: str, intercept_name: str = "Intercept") -> Tuple[np.ndarray, np.ndarray, str]:
@@ -59,12 +60,7 @@ def generate_glm_response(eta: np.ndarray, family: str = "Gaussian", link: str =
     mu := E[Y] = g^{-1}(eta)
     var := var[Y] = phi * V(mu)
     """
-    _link_str_to_link_inverse = {
-        "identity": lambda eta: eta,
-        "log": lambda eta: np.exp(eta)
-    }
-
-    link_inverse = _link_str_to_link_inverse[link]
+    link_inverse = link_str_to_link_inverse[link]
     variance_fn = family_to_variance_function[family]
     random_sampler = family_to_random_sampler[family]
 

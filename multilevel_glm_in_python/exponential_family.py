@@ -1,6 +1,8 @@
 import numpy as np
+import pymc3 as pm
 
 __families__ = ["Gaussian", "Gamma"]
+__link__ = ["identity", "log"]
 
 
 def sample_gaussian(mu: np.ndarray, sd: np.ndarray) -> np.ndarray:
@@ -19,6 +21,10 @@ def sample_gamma(mu: np.ndarray, sd: np.ndarray) -> np.ndarray:
     return y
 
 
+link_str_to_link_inverse = {
+    "identity": lambda eta: eta,
+    "log": lambda eta: np.exp(eta)
+}
 family_to_variance_function = {
     "Gaussian": lambda mu: np.ones_like(mu),
     "Gamma": lambda mu: mu ** 2
@@ -27,6 +33,12 @@ family_to_variance_function = {
 family_to_random_sampler = {
     "Gaussian": sample_gaussian,
     "Gamma": sample_gamma
+}
+
+family_to_pm_distribution = {
+    "Gaussian": pm.Normal,
+    "Gamma": pm.Gamma
+
 }
 
 if __name__ == '__main__':
