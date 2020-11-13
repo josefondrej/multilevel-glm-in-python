@@ -15,7 +15,9 @@ def _print_map(maximum_aposteriori_estimate: Dict[str, Any]):
             print(f"{coeff_name}: {' ' * (20 - len(coeff_name))} {value}")
 
 
-def create_model(data: DataFrame, family: str = "Gaussian", link: str = "identity") -> Model:
+def create_model(formula: str, group_name: str, data: DataFrame,
+                 family: str = "Gaussian", link: str = "identity") -> Model:
+    n_groups = len(set(data[group_name]))
     with pm.Model() as model:
         # Prior on random effects
         sd_b_group = pm.HalfNormal("sd_b_group", sigma=100)
@@ -25,10 +27,10 @@ def create_model(data: DataFrame, family: str = "Gaussian", link: str = "identit
         phi = pm.HalfNormal("phi", sigma=100)
 
         # Prior on fixed effects
-        lm = pm.glm.LinearComponent.from_formula(formula="y ~ x1 + x2 + x3 ", data=data)
+        lm = pm.glm.LinearComponent.from_formula(formula=formula, data=data)
 
         # Likelihood
-        eta = lm.y_est + b_group[data["group_index"]]
+        eta = lm.y_est + b_group[data[group_name]]
         g = link_str_to_link_inverse[link]
         V = family_to_variance_function[family]
         mu = g(eta)
@@ -40,18 +42,16 @@ def create_model(data: DataFrame, family: str = "Gaussian", link: str = "identit
 
 
 if __name__ == '__main__':
-    gaussian_data = read_csv("../data/Gaussian_identity_data.csv")
-    gamma_data = read_csv("../data/Gamma_log_data.csv")
+    # Requires to set the working directory to the project directory
+    gaussian_data = read_csv("./data/Gaussian_identity_data.csv")
+    gamma_data = read_csv("./data/Gamma_log_data.csv")
 
-    n_groups_gaussian = len(set(gaussian_data["group_index"]))
-    n_groups_gamma = len(set(gamma_data["group_index"]))
-    assert n_groups_gamma == n_groups_gaussian
-    n_groups = n_groups_gaussian
+    model = create_model(formula="y ~ x1 + x2 + x3", group_name="group_index", data=gaussian_data,
+                         family="Gaussian", link="identity")
+    map_gaussian = pm.find_MAP(model=model)
+    _print_map(map_gaussian)
 
-    model = create_model(data=gaussian_data, family="Gaussian", link="identity")
-    maximum_aposteriori_estimate = pm.find_MAP(model=model)
-    _print_map(maximum_aposteriori_estimate)
-
-    model = create_model(data=gamma_data, family="Gamma", link="log")
-    maximum_aposteriori_estimate = pm.find_MAP(model=model)
-    _print_map(maximum_aposteriori_estimate)
+    model = create_model(formula="y ~ x1 + x2 + x3", group_name="group_index", data=gamma_data,
+                         family="Gamma", link="log")
+    map_gamma = pm.find_MAP(model=model)
+    _print_map(map_gamma)

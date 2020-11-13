@@ -11,6 +11,7 @@ get_random_intercepts <- function(model) {
   return(random_intercepts)
 }
 
+# Requires to set the working directory to the project directory
 gaussian_data <- read.csv("./data/Gaussian_identity_data.csv")
 gamma_data <- read.csv("./data/Gamma_log_data.csv")
 
