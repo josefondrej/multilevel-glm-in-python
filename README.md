@@ -3,6 +3,20 @@
 This is a collection of scripts that show different possibilities how to fit 
 multilevel generalized linear models in Python (and R). 
 
+## Requirements 
+Requires `python==3.8` and the packages listed in `requirements.txt` -- notably `pymc3` and `statsmodels`.
+
+## Project structure
+The main examples are located in the following files: 
+```
+.
+└── multilevel_glm_in_python
+         └── estimate_glmm_examples
+                    ├── in_pymc3.py
+                    ├── in_R.R
+                    └── in_statsmodels.py
+```
+
 ## Theory
 
 Mostly taken from these [course notes](https://www2.karlin.mff.cuni.cz/~kulich/vyuka/pokreg/doc/advreg_notes_200522.pdf).
