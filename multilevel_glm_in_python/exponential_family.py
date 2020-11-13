@@ -2,7 +2,7 @@ import numpy as np
 import pymc3 as pm
 
 __families__ = ["Gaussian", "Gamma"]
-__link__ = ["identity", "log"]
+__links__ = ["identity", "log"]
 
 
 def sample_gaussian(mu: np.ndarray, sd: np.ndarray) -> np.ndarray:
