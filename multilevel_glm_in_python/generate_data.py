@@ -36,9 +36,15 @@ def generate_x_data(formula: str, n_obs: int = 1000, intercept_name: str = "Inte
 
 
 def add_random_intercept(data: DataFrame, n_groups: int = 10, group_sd: float = 1.0,
-                         linear_predictor_name: str = "eta", group_index_name: str = "group_index") -> Dict[int, float]:
+                         linear_predictor_name: str = "eta", group_index_name: str = "group_index",
+                         center_sample: bool = True) -> Dict[int, float]:
     group_index_to_random_intercept = {group_index: np.random.randn() * group_sd for group_index in range(n_groups)}
+    if center_sample:
+        mu_b = np.mean(list(group_index_to_random_intercept.values()))
+        group_index_to_random_intercept = {grp_ix: b - mu_b for grp_ix, b in group_index_to_random_intercept.items()}
+
     data[group_index_name] = np.random.choice(range(n_groups), len(data))
+    data[linear_predictor_name] += data[group_index_name].apply(group_index_to_random_intercept.get)
     return group_index_to_random_intercept
 
 
@@ -90,8 +96,8 @@ if __name__ == '__main__':
 
     formula = "y ~ 1.4 + 3.15 * x1 + 2.5 * x2 + 0.6 * x3"
     n_obs = 10000
-    n_groups = 10
-    group_sd = 2.1
+    n_groups = 8
+    group_sd = 3.0
     phi = 0.6
 
     for family, link in [("Gaussian", "identity"), ("Gamma", "log")]:
