@@ -84,7 +84,7 @@ def generate_data(formula: str, n_obs: int = 1000, n_groups: int = 10, group_sd:
     return data, group_index_to_random_intercept
 
 
-def _save_data(name: str, data: DataFrame, metadata: Dict[str, Any], out_dir: str = "/tmp/multilevel-glm-in-python/"):
+def _save_data(name: str, data: DataFrame, metadata: Dict[str, Any], out_dir: str = "./data/"):
     os.makedirs(out_dir, exist_ok=True)
     data.to_csv(f"{out_dir}{name}_data.csv")
     with open(f"{out_dir}{name}_metadata.json", "w") as metadata_file:

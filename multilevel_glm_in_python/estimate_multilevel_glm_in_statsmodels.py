@@ -7,12 +7,13 @@
 from pandas import read_csv
 from statsmodels.regression.mixed_linear_model import MixedLM
 
-gaussian_data = read_csv("/tmp/multilevel-glm-in-python/Gaussian_identity_data.csv")
+gaussian_data = read_csv("../data/Gaussian_identity_data.csv")
 
 model = MixedLM.from_formula("y ~ x1 + x2 + x3", data=gaussian_data, groups=gaussian_data["group_index"])
+model_result = model.fit()
 
 # Fixed effects
-model_result = model.fit()
+print(model_result)
 
 # Random effects
 print(model_result.random_effects)

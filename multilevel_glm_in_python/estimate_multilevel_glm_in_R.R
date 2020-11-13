@@ -13,8 +13,8 @@ get_random_intercepts <- function(model) {
   return(random_intercepts)
 }
 
-gaussian_data <- read.csv("/tmp/multilevel-glm-in-python/Gaussian_identity_data.csv")
-gamma_data <- read.csv("/tmp/multilevel-glm-in-python/Gamma_log_data.csv")
+gaussian_data <- read.csv("./data/Gaussian_identity_data.csv")
+gamma_data <- read.csv("./data/Gamma_log_data.csv")
 
 gaussian_model = glmer("y ~ x1 + x2 + x3 + (1 | group_index)", family = gaussian(link = "identity"), data = gaussian_data)
 gamma_model = glmer("y ~ x1 + x2 + x3 + (1 | group_index)", family = Gamma(link = "log"), data = gamma_data)
