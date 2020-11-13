@@ -2,8 +2,6 @@
 # Created by: josef
 # Created on: 13.11.20
 
-# Prerequisite for this script is running generate_data.py
-
 library(lme4)
 library(blmeco)
 

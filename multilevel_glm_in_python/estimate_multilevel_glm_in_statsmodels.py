@@ -1,5 +1,4 @@
 # How to estimate multilevel GLM in statsmodels package
-# Prerequisite for this script is running generate_data.py
 
 # We only show example for gaussian model, because gamma model is not implemented in the package
 # see: https://www.statsmodels.org/devel/mixed_glm.html
