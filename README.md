@@ -30,12 +30,15 @@ function. Within the exponential family, the variance function determines the di
 
 **Definition** *Generalized Linear Model*: The data <img src="https://render.githubusercontent.com/render/math?math=\large (Y_i, X_i)"> satisfy the generalized linear 
 model (GLM) if:
+
 1. <img src="https://render.githubusercontent.com/render/math?math=\large Y_1, \dots, Y_n"> are independent and the distribution of <img src="https://render.githubusercontent.com/render/math?math=\large Y_i"> depends on <img src="https://render.githubusercontent.com/render/math?math=\large X_i"> through 
-regression parameters <img src="https://render.githubusercontent.com/render/math?math=\large \beta">. 
+regression parameters <img src="https://render.githubusercontent.com/render/math?math=\large \beta">.
+ 
 2. The conditional density of <img src="https://render.githubusercontent.com/render/math?math=\large Y_i"> given <img src="https://render.githubusercontent.com/render/math?math=\large X_i"> has the form <img src="https://render.githubusercontent.com/render/math?math=\large f(y, \theta_i, \varphi)"> 
 (see definition of Exponential Family), where <img src="https://render.githubusercontent.com/render/math?math=\large b(.)"> is known twice continuously differentiable 
-function, <img src="https://render.githubusercontent.com/render/math?math=\large \theta_i"> depends on <img src="https://render.githubusercontent.com/render/math?math=\large X_i"> and <img src="https://render.githubusercontent.com/render/math?math=\large \beta"> and <img src="https://render.githubusercontent.com/render/math?math=\large \varphi"> is known or unknown constant. 
+function, <img src="https://render.githubusercontent.com/render/math?math=\large \theta_i"> depends on <img src="https://render.githubusercontent.com/render/math?math=\large X_i"> and <img src="https://render.githubusercontent.com/render/math?math=\large \beta"> and <img src="https://render.githubusercontent.com/render/math?math=\large \varphi"> is known or unknown constant.
+ 
 3. There exists a strictly monotone, twice continuously differentiable *link function* <img src="https://render.githubusercontent.com/render/math?math=\large g"> 
-such that <img src="https://render.githubusercontent.com/render/math?math=\large \mu_i = g^{-1}(\eta_i)"> where <img src="https://render.githubusercontent.com/render/math?math=\large \eta_i = X_i^{\top}\beta"> is the *linear predictor*. 
+such that <img src="https://render.githubusercontent.com/render/math?math=\large \mu_i := E[Y_i | X_i] = g^{-1}(\eta_i)"> where <img src="https://render.githubusercontent.com/render/math?math=\large \eta_i = X_i^{\top}\beta"> is the *linear predictor*. 
 
  
