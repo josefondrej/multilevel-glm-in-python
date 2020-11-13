@@ -19,7 +19,7 @@ gamma_data <- read.csv("/tmp/multilevel-glm-in-python/Gamma_log_data.csv")
 gaussian_model = glmer("y ~ x1 + x2 + x3 + (1 | group_index)", family = gaussian(link = "identity"), data = gaussian_data)
 gamma_model = glmer("y ~ x1 + x2 + x3 + (1 | group_index)", family = Gamma(link = "log"), data = gamma_data)
 
-# Coefficients and dispersion parameter
+# Fixed effects
 summary(gamma_model)
 summary(gaussian_model)
 
@@ -28,5 +28,5 @@ get_random_intercepts(gamma_model)
 get_random_intercepts(gaussian_model)
 
 # Dispersion parameter phi
-dispersion_glmer(gamma_model)
-dispersion_glmer(gaussian_model)
+dispersion_glmer(gamma_model)^2
+dispersion_glmer(gaussian_model)^2
